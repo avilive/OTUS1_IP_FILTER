@@ -3,6 +3,7 @@
 # $ cmake --version
 cmake_minimum_required(VERSION 3.8)
 
+
 # Set the project name
 if (DEFINED TRAVIS_BUILD_NUMBER)
     project (ip_filter VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
