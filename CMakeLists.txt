@@ -4,13 +4,16 @@
 cmake_minimum_required(VERSION 3.8)
 
 
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_VERSION_MINOR 0) 
+
 # Set the project name
-if (DEFINED TRAVIS_BUILD_NUMBER)
-    project (ip_filter VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
-else()
-    project (ip_filter VERSION 0.0.1)
-endif()
-enable_testing()
+if( NOT DEFINED ENV{$ENV{TRAVIS_BUILD_NUMBER}})
+    set($ENV{TRAVIS_BUILD_NUMBER} 0)  
+ENDIF()
+set(PROJECT_VERSION_PATCH $ENV{TRAVIS_BUILD_NUMBER}+1)
+project (ip_filter)# VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+#enable_testing()
 
 
 SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:\\Boost\\boost_1_65_1")
@@ -33,7 +36,6 @@ ENDIF()
 set(SOURCES
     main.cpp
     lib.cpp
-
 )
 
 configure_file(version.h.in version.h)
