@@ -33,7 +33,7 @@ ENDIF()
 set(SOURCES
     main.cpp
     lib.cpp
-    test_version.cpp
+    #test_version.cpp
 )
 
 configure_file(version.h.in version.h)
