@@ -41,17 +41,17 @@ configure_file(version.h.in version.h)
 
 # Add an executable with the above sources
 add_executable(ip_filter ${SOURCES})
-#add_library(ip_filter src/lib.cpp)
-add_executable(test_version test_version.cpp)
+#add_library(ip_filter lib.cpp)
+#add_executable(test_version test_version.cpp)
 # Set the directories that should be included in the build command for this target
 # when running g++ these will be included as -I/directory/path/
 
 
-#target_link_libraries(ip_filter
-  #                    ${Boost_FILESYSTEM_LIBRARY}
- #                     ${Boost_SYSTEM_LIBRARY}
- #                     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
- #                     )
+target_link_libraries(ip_filter
+                      ${Boost_FILESYSTEM_LIBRARY}
+                      ${Boost_SYSTEM_LIBRARY}
+                      ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+                    )
 
 target_include_directories(ip_filter
     PRIVATE 
@@ -60,9 +60,6 @@ target_include_directories(ip_filter
 
 
 
- #target_link_libraries(ip_filter_cli PRIVATE
- #   ip_filter
-#)
 
 
 # use particular C++ 14 standart
@@ -81,6 +78,6 @@ set(CPACK_PACKAGE_CONTACT example@example.com)
 
 include(CPack)
 
-enable_testing()
+#enable_testing()
 
-add_test(test_version test_version)
+#add_test(test_version test_version)
