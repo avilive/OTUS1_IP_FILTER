@@ -33,7 +33,7 @@ ENDIF()
 set(SOURCES
     main.cpp
     lib.cpp
-    test_version.cpp
+
 )
 
 configure_file(version.h.in version.h)
@@ -42,7 +42,7 @@ configure_file(version.h.in version.h)
 # Add an executable with the above sources
 add_executable(ip_filter ${SOURCES})
 #add_library(ip_filter src/lib.cpp)
-#add_executable(test_version src/test_version.cpp)
+add_executable(test_version test_version.cpp)
 # Set the directories that should be included in the build command for this target
 # when running g++ these will be included as -I/directory/path/
 
