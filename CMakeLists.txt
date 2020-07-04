@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.8)
  #   set($ENV{TRAVIS_BUILD_NUMBER} 0)  
 #ENDIF()
 
-project (ip_filter VERSION 0.0.1)
+project (ip_filter VERSION 0.0.19)
 #enable_testing()
 
 
