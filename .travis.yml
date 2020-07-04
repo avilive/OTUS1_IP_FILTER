@@ -11,4 +11,4 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-  - curl -T ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uavilive:"c2f26664e4be058c5f1f17205367f3a9a378cafa" "https://api.bintray.com/content/avilive/OTUS1_IP_FILTER/ip_filter/$TRAVIS_BUILD_NUMBER/ip_filter-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - curl -T ip_filter-0.0.12-Linux.deb -uavilive:"c2f26664e4be058c5f1f17205367f3a9a378cafa" "https://api.bintray.com/content/avilive/OTUS1_IP_FILTER/ip_filter/12/ip_filter-0.0.12-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
