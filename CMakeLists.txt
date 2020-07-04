@@ -67,6 +67,13 @@ set_target_properties(ip_filter PROPERTIES
     CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
+target_include_directories(ip_filter
+    PRIVATE "${CMAKE_BINARY_DIR}"
+)
+#set_target_properties(test_version PROPERTIES
+#    COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+#    INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
+#)
 
 set(CPACK_GENERATOR DEB)
 
