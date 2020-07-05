@@ -5,14 +5,28 @@ cmake_minimum_required(VERSION 3.8)
 
 
 
-# Set the project name
-#if( NOT DEFINED ENV{$ENV{TRAVIS_BUILD_NUMBER}})
- #   set($ENV{TRAVIS_BUILD_NUMBER} 0)  
-#ENDIF()
 
-project (ip_filter VERSION 0.0.19)
-#enable_testing()
 
+
+set(HEADER_FILE "build_number.h")
+set(CACHE_FILE "BuildNumberCache.txt")
+
+#Reading data from file + incrementation
+IF(EXISTS ${CACHE_FILE})
+    file(READ ${CACHE_FILE} BUILD_NUMBER)
+    math(EXPR BUILD_NUMBER "${BUILD_NUMBER}+1")
+ELSE()
+    set(BUILD_NUMBER "1")
+ENDIF()
+
+
+#Update the cache
+file(WRITE ${CACHE_FILE} "${BUILD_NUMBER}")
+
+#Create the header
+file(WRITE ${HEADER_FILE} "#ifndef BUILD_NUMBER_H\n#define BUILD_NUMBER_H\n\n#define BUILD_NUMBER ${BUILD_NUMBER}\n\n#endif")
+
+project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 
 SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:\\Boost\\boost_1_65_1")
 SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:\\Boost\\boost_1_65_1\\stage\\lib")
@@ -57,8 +71,6 @@ target_include_directories(ip_filter
     PRIVATE 
         ${PROJECT_SOURCE_DIR}
 )
-
-
 
 
 
