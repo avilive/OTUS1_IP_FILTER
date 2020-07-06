@@ -4,10 +4,6 @@
 cmake_minimum_required(VERSION 3.8)
 
 
-
-
-
-
 set(HEADER_FILE "build_number.h")
 set(CACHE_FILE "BuildNumberCache.txt")
 
@@ -28,37 +24,39 @@ file(WRITE ${HEADER_FILE} "#ifndef BUILD_NUMBER_H\n#define BUILD_NUMBER_H\n\n#de
 
 project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 
-SET(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:\\Boost\\boost_1_65_1")
-SET(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:\\Boost\\boost_1_65_1\\stage\\lib")
-SET(BOOST_ROOT "C:\\Boost\\boost_1_65_1")
+SET(GTEST_ROOT "C:\\gtest")
+SET(BUILD_SHARED_LIBS ON)
 
 
-#find_package(Boost REQUIRED)
 
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
-
-
-IF (Boost_FOUND)
-    INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
-    ADD_DEFINITIONS( "-DHAS_BOOST" )
-ENDIF()
-
-
-# Create a sources variable with a link to all cpp files to compile
+#find_package(GTest REQUIRED)
 set(SOURCES
     main.cpp
+    #lib.cpp
+)
+ADD_LIBRARY(Libs STATIC
     lib.cpp
 )
+add_executable(ip_filter ${SOURCES})
+
+add_subdirectory("C:\\gtest" ${CMAKE_BINARY_DIR}/gtest)
+enable_testing()
+include_directories(${GTEST_INCLUDE_DIRS})
+add_executable(test_version test_version.cpp)
+target_link_libraries(test_version gtest gtest_main)
+add_test(AllTests test)
+
+
+
+include_directories(${GTEST_INCLUDE_DIRS})
+target_link_libraries(ip_filter Libs)
+target_link_libraries(test_version libs)
+
+# Create a sources variable with a link to all cpp files to compile
 
 configure_file(version.h.in version.h)
 
-
-# Add an executable with the above sources
-add_executable(ip_filter ${SOURCES})
-#add_library(ip_filter lib.cpp)
-#add_executable(test_version test_version.cpp)
-# Set the directories that should be included in the build command for this target
-# when running g++ these will be included as -I/directory/path/
+include(GoogleTest)
 
 
 target_link_libraries(ip_filter
@@ -82,10 +80,6 @@ set_target_properties(ip_filter PROPERTIES
 target_include_directories(ip_filter
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
-#set_target_properties(test_version PROPERTIES
-#    COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-#    INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
-#)
 
 set(CPACK_GENERATOR DEB)
 
@@ -97,6 +91,6 @@ set(CPACK_PACKAGE_CONTACT example@example.com)
 
 include(CPack)
 
-#enable_testing()
+enable_testing()
 
-#add_test(test_version test_version)
+add_test(test_version test_version)
