@@ -24,7 +24,7 @@ file(WRITE ${HEADER_FILE} "#ifndef BUILD_NUMBER_H\n#define BUILD_NUMBER_H\n\n#de
 
 project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 
-SET(GTEST_ROOT "C:\\gtest")
+#SET(GTEST_ROOT "C:\\gtest")
 SET(BUILD_SHARED_LIBS ON)
 
 
