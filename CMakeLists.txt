@@ -24,12 +24,12 @@ file(WRITE ${HEADER_FILE} "#ifndef BUILD_NUMBER_H\n#define BUILD_NUMBER_H\n\n#de
 
 project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 
-#SET(GTEST_ROOT "C:\\gtest")
+#SET(GTEST_ROOT ${PROJECT_SOURCE_DIR}/gtest)
 SET(BUILD_SHARED_LIBS ON)
 
 
 
-#find_package(GTest REQUIRED)
+
 set(SOURCES
     main.cpp
     #lib.cpp
@@ -39,7 +39,9 @@ ADD_LIBRARY(Libs STATIC
 )
 add_executable(ip_filter ${SOURCES})
 
-add_subdirectory("C:\\gtest" ${CMAKE_BINARY_DIR}/gtest)
+
+#find_package(GTest REQUIRED)
+#add_subdirectory("C:\\gtest" ${CMAKE_BINARY_DIR}/gtest)
 enable_testing()
 include_directories(${GTEST_INCLUDE_DIRS})
 add_executable(test_version test_version.cpp)
