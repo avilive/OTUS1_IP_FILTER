@@ -75,7 +75,7 @@ target_include_directories(ip_filter
 
 # use particular C++ 14 standart
 set_target_properties(ip_filter PROPERTIES
-    CXX_STANDARD 14
+    CXX_STANDARD 11
     CXX_STANDARD_REQUIRED ON
 )
 target_include_directories(ip_filter
