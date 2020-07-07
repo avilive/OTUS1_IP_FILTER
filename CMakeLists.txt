@@ -39,7 +39,6 @@ ADD_LIBRARY(Libs STATIC
 )
 add_executable(ip_filter ${SOURCES})
 
-
 #find_package(GTest REQUIRED)
 add_subdirectory("gtest" ${CMAKE_BINARY_DIR}/gtest)
 enable_testing()
