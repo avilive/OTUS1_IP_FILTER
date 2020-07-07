@@ -41,7 +41,7 @@ add_executable(ip_filter ${SOURCES})
 
 
 #find_package(GTest REQUIRED)
-#add_subdirectory("C:\\gtest" ${CMAKE_BINARY_DIR}/gtest)
+add_subdirectory("gtest" ${CMAKE_BINARY_DIR}/gtest)
 enable_testing()
 include_directories(${GTEST_INCLUDE_DIRS})
 add_executable(test_version test_version.cpp)
