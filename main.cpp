@@ -4,7 +4,8 @@
 
 int main(int, char**)
 {
-    std::cout << "Version:" << version() << std::endl;
+    std::cout << get_build_number()<< std::endl;
+    std::cout << get_greeting() << std::endl;
 
     return 0;
 }

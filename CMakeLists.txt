@@ -87,10 +87,10 @@ add_dependencies(${GMOCK_MAIN_LIBRARY} ${GTEST_LIBRARY})
 
 #------------------------------------------
 
-#find_package(GTest REQUIRED)
+
 set(SOURCES
     main.cpp
-    #lib.cpp
+
 )
 ADD_LIBRARY(Libs STATIC
     lib.cpp
@@ -98,20 +98,19 @@ ADD_LIBRARY(Libs STATIC
 include(GoogleTest)
 
 add_executable(ip_filter ${SOURCES})
-#add_subdirectory("C:\\gtest" ${CMAKE_BINARY_DIR}/gtest)
-#enable_testing()
+
 include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(test_version test_version.cpp)
 target_link_libraries(test_version gtest gtest_main )
 
-#add_test(AllTests test)
+
 
 
 
 include_directories(${GTEST_INCLUDE_DIRS})
 target_link_libraries(ip_filter Libs)
-#target_link_libraries(test_version libs)
+target_link_libraries(test_version libs)
 
 # Create a sources variable with a link to all cpp files to compile
 
