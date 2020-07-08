@@ -1,14 +1,18 @@
-#define BOOST_TEST_MODULE test_version
+#define GOOGLE_TEST_MODULE test_version
 
 #include "lib.h"
+#include "gtest/gtest.h"
+#include <string>
 
-#include <boost/test/unit_test.hpp>
-
-BOOST_AUTO_TEST_SUITE(test_version)
-
-BOOST_AUTO_TEST_CASE(test_valid_version)
+TEST(OutputMessageTest, WorldGreetingIsCorrect)
 {
-    BOOST_CHECK(version() > 0);
+	std::string str1 = "Hello, World!";
+	std::string str2 = get_greeting();
+	EXPECT_TRUE(str1==str2);
 }
 
+int main(int argc, char* argv[])
+{
+	//testing::InitGoogleTest(&argc, argv);
+	return 1;// RUN_ALL_TESTS();
 }

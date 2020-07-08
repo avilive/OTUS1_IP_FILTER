@@ -26,6 +26,7 @@ project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 
 #SET(GTEST_ROOT "C:\\gtest")
 SET(BUILD_SHARED_LIBS ON)
+
 #------------------------------------------
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
