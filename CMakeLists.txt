@@ -24,12 +24,69 @@ file(WRITE ${HEADER_FILE} "#ifndef BUILD_NUMBER_H\n#define BUILD_NUMBER_H\n\n#de
 
 project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 
-#SET(GTEST_ROOT ${PROJECT_SOURCE_DIR}/gtest)
+#SET(GTEST_ROOT "C:\\gtest")
 SET(BUILD_SHARED_LIBS ON)
+#------------------------------------------
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+find_package(Threads REQUIRED)
+include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
+ExternalProject_Add(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  UPDATE_COMMAND ""
+  INSTALL_COMMAND ""
+  LOG_DOWNLOAD ON
+  LOG_CONFIGURE ON
+  LOG_BUILD ON)
+
+ExternalProject_Get_Property(googletest source_dir)
+set(GTEST_INCLUDE_DIRS ${source_dir}/googletest/include)
+set(GMOCK_INCLUDE_DIRS ${source_dir}/googlemock/include)
+
+ExternalProject_Get_Property(googletest binary_dir)
+##set(GTEST_LIBRARY_PATH ${binary_dir}/googlemock/gtest/${CMAKE_FIND_LIBRARY_PREFIXES}gtest.a)
+set(GTEST_LIBRARY_PATH ${binary_dir}/lib/${CMAKE_FIND_LIBRARY_PREFIXES}gtestd.lib)
+set(GTEST_LIBRARY gtest)
+add_library(${GTEST_LIBRARY} UNKNOWN IMPORTED)
+
+set_target_properties(${GTEST_LIBRARY} PROPERTIES
+  IMPORTED_LOCATION ${GTEST_LIBRARY_PATH})
+
+set_target_properties(${GTEST_LIBRARY} PROPERTIES
+  IMPORTED_LINK_INTERFACE_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")
+
+add_dependencies(${GTEST_LIBRARY} googletest)
+
+##set(GTEST_MAIN_LIBRARY_PATH ${binary_dir}/googlemock/gtest/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main.a)
+set(GTEST_MAIN_LIBRARY_PATH ${binary_dir}/lib/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_maind.lib)
+set(GTEST_MAIN_LIBRARY gtest_main)
+add_library(${GTEST_MAIN_LIBRARY} UNKNOWN IMPORTED)
+set_target_properties(${GTEST_MAIN_LIBRARY} PROPERTIES
+  IMPORTED_LOCATION ${GTEST_MAIN_LIBRARY_PATH}
+  IMPORTED_LINK_INTERFACE_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")
+add_dependencies(${GTEST_MAIN_LIBRARY} googletest)
+
+set(GMOCK_LIBRARY_PATH ${binary_dir}/lib/${CMAKE_FIND_LIBRARY_PREFIXES}gmockd.lib)
+set(GMOCK_LIBRARY gmock)
+add_library(${GMOCK_LIBRARY} UNKNOWN IMPORTED)
+set_target_properties(${GMOCK_LIBRARY} PROPERTIES
+  IMPORTED_LOCATION ${GMOCK_LIBRARY_PATH}
+  IMPORTED_LINK_INTERFACE_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")
+add_dependencies(${GMOCK_LIBRARY} googletest)
+
+set(GMOCK_MAIN_LIBRARY_PATH ${binary_dir}/lib/${CMAKE_FIND_LIBRARY_PREFIXES}gmock_maind.lib)
+set(GMOCK_MAIN_LIBRARY gmock_main)
+add_library(${GMOCK_MAIN_LIBRARY} UNKNOWN IMPORTED)
+set_target_properties(${GMOCK_MAIN_LIBRARY} PROPERTIES
+  IMPORTED_LOCATION ${GMOCK_MAIN_LIBRARY_PATH}
+  IMPORTED_LINK_INTERFACE_LIBRARIES "${CMAKE_THREAD_LIBS_INIT}")
+add_dependencies(${GMOCK_MAIN_LIBRARY} ${GTEST_LIBRARY})
 
 
+#------------------------------------------
 
-
+#find_package(GTest REQUIRED)
 set(SOURCES
     main.cpp
     #lib.cpp
@@ -37,21 +94,23 @@ set(SOURCES
 ADD_LIBRARY(Libs STATIC
     lib.cpp
 )
-add_executable(ip_filter ${SOURCES})
+include(GoogleTest)
 
-#find_package(GTest REQUIRED)
-add_subdirectory("gtest" ${CMAKE_BINARY_DIR}/gtest)
-enable_testing()
+add_executable(ip_filter ${SOURCES})
+#add_subdirectory("C:\\gtest" ${CMAKE_BINARY_DIR}/gtest)
+#enable_testing()
 include_directories(${GTEST_INCLUDE_DIRS})
+
 add_executable(test_version test_version.cpp)
-target_link_libraries(test_version gtest gtest_main)
-add_test(test_version test_version)
+target_link_libraries(test_version gtest gtest_main )
+
+#add_test(AllTests test)
 
 
 
 include_directories(${GTEST_INCLUDE_DIRS})
 target_link_libraries(ip_filter Libs)
-target_link_libraries(test_version libs)
+#target_link_libraries(test_version libs)
 
 # Create a sources variable with a link to all cpp files to compile
 
@@ -75,7 +134,7 @@ target_include_directories(ip_filter
 
 # use particular C++ 14 standart
 set_target_properties(ip_filter PROPERTIES
-    CXX_STANDARD 11
+    CXX_STANDARD 14
     CXX_STANDARD_REQUIRED ON
 )
 target_include_directories(ip_filter
