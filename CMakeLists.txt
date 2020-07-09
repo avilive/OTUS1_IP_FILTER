@@ -27,8 +27,10 @@ project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 SET(BUILD_SHARED_LIBS ON)
 
 #------------------------------------------
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+if (MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+ENDIF()
 find_package(Threads REQUIRED)
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 ExternalProject_Add(
@@ -130,9 +132,9 @@ target_include_directories(ip_filter
  #   )
 #else ()
 #if(NOT MSVC)
-#    target_compile_options(${SOURCES} PRIVATE
+ #   target_compile_options(${SOURCES} PRIVATE
  #       -Wall -Wextra -pedantic -Werror
-#    )
+ #   )
  #   target_compile_options(Libs PRIVATE
  #       -Wall -Wextra -pedantic -Werror
  #   )
