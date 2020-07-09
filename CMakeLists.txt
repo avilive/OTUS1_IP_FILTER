@@ -129,16 +129,19 @@ target_include_directories(ip_filter
  #       /W4
  #   )
 #else ()
- #   target_compile_options(${SOURCES} PRIVATE
-  #      -Wall -Wextra -pedantic -Werror
-  #  )
-  #  target_compile_options(Libs PRIVATE
-  #      -Wall -Wextra -pedantic -Werror
-  #  )
- #   target_compile_options(test_version PRIVATE
-  #      -Wall -Wextra -pedantic -Werror
-  #  )
-#endif()
+if(NOT MSVC)
+    target_compile_options(${SOURCES} PRIVATE
+        -Wall -Wextra -pedantic -Werror
+    )
+    target_compile_options(Libs PRIVATE
+        -Wall -Wextra -pedantic -Werror
+    )
+    target_compile_options(test_version PRIVATE
+        -Wall -Wextra -pedantic -Werror
+    )
+endif()
+
+
 
 install(TARGETS ip_filter RUNTIME DESTINATION bin)
 
