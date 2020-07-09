@@ -24,7 +24,6 @@ file(WRITE ${HEADER_FILE} "#ifndef BUILD_NUMBER_H\n#define BUILD_NUMBER_H\n\n#de
 
 project (ip_filter VERSION 0.0.${BUILD_NUMBER})
 
-#SET(GTEST_ROOT "C:\\gtest")
 SET(BUILD_SHARED_LIBS ON)
 
 #------------------------------------------
@@ -84,19 +83,12 @@ include(GoogleTest)
 
 add_executable(ip_filter ${SOURCES})
 
-include_directories(${GTEST_INCLUDE_DIRS})
-
 add_executable(test_version test_version.cpp)
-target_link_libraries(test_version gtest gtest_main )
-
-
-
-
-
+include_directories(${GTEST_INCLUDE_DIRS})
 include_directories(${GTEST_INCLUDE_DIRS})
 target_link_libraries(ip_filter Libs)
-target_link_libraries(test_version libs)
 
+target_link_libraries(test_version libs gtest gtest_main )
 # Create a sources variable with a link to all cpp files to compile
 
 configure_file(version.h.in version.h)
@@ -126,27 +118,29 @@ target_include_directories(ip_filter
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
 
-if (MSVC)
-    target_compile_options(helloworld_cli PRIVATE
-        /W4
-    )
-    target_compile_options(helloworld PRIVATE
-        /W4
-    )
-    target_compile_options(test_version PRIVATE
-        /W4
-    )
-else ()
-    target_compile_options(helloworld_cli PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    target_compile_options(helloworld PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    target_compile_options(test_version PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-endif()
+#if (MSVC)
+ #   target_compile_options(${SOURCES} PRIVATE
+ #       /W4
+#    )
+#    target_compile_options(Libs PRIVATE
+#        /W4
+#    )
+ #   target_compile_options(test_version PRIVATE
+ #       /W4
+ #   )
+#else ()
+ #   target_compile_options(${SOURCES} PRIVATE
+  #      -Wall -Wextra -pedantic -Werror
+  #  )
+  #  target_compile_options(Libs PRIVATE
+  #      -Wall -Wextra -pedantic -Werror
+  #  )
+ #   target_compile_options(test_version PRIVATE
+  #      -Wall -Wextra -pedantic -Werror
+  #  )
+#endif()
+
+install(TARGETS ip_filter RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 
