@@ -31,7 +31,7 @@ if (MSVC)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 ENDIF()
-find_package(Threads REQUIRED)
+#find_package(Threads REQUIRED)
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 ExternalProject_Add(
   googletest
